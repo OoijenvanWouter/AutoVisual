@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AutoVisual</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header id="top">
+  <div class="brand">AUTO<b>VISUAL</b></div>
+  <div class="pill" id="helper">helper…</div>
+  <select id="res" aria-label="Resolutie"><option value="360">360p</option><option value="540">540p</option><option value="720">720p</option><option value="1080">1080p</option></select>
+  <div class="group" aria-label="Randomize op het deck dat je bewerkt">
+    <span class="grp-label">Random</span>
+    <button data-rnd="mutate" title="Kleine variatie op wat er nu staat (M)">Mutatie</button>
+    <button data-rnd="fx">Effecten</button>
+    <button data-rnd="routes">Routing</button>
+    <button data-rnd="images">Beeld</button>
+  </div>
+  <div class="spacer"></div>
+  <span class="fps" id="fps"></span>
+  <button id="export">Exporteren</button>
+  <button id="import">Importeren</button>
+  <input type="file" id="importFile" accept=".json" hidden>
+  <button id="popout" title="Open de output in een apart venster voor beamer of tweede scherm">Output</button>
+  <button id="full" title="Volledig scherm (F)">Volledig</button>
+  <button id="black" class="danger" title="Beeld op zwart (B)">Blackout</button>
+</header>
+
+<main id="app">
+  <section id="band">
+    <div class="card" id="cardA">
+      <div class="pv"><canvas id="pvA" width="384" height="216"></canvas><i class="air" id="airA"></i><b class="tag">A</b></div>
+      <div class="ctl" id="ctlA"></div>
+    </div>
+
+    <div class="card center">
+      <div id="stage"><canvas id="gl"></canvas></div>
+      <div class="xf">
+        <button id="toA" title="Fade naar A (pijl links)">A</button>
+        <div id="xfSlot"></div>
+        <button id="toB" title="Fade naar B (pijl rechts)">B</button>
+      </div>
+      <div class="rowf xfctl">
+        <label class="field">Effect <select id="xfMode"></select></label>
+        <label class="field">Duur <input type="number" id="xfDur" min="0" max="60" step="0.1"> s</label>
+        <button id="autoOn" class="toggle" title="Laat de regels uit het tabblad Automatisch de crossfader sturen">Auto uit</button>
+      </div>
+    </div>
+
+    <div class="card" id="cardB">
+      <div class="pv"><canvas id="pvB" width="384" height="216"></canvas><i class="air" id="airB"></i><b class="tag">B</b></div>
+      <div class="ctl" id="ctlB"></div>
+    </div>
+  </section>
+
+  <section id="lower">
+    <div id="colB" class="panel">
+      <div class="ph">
+        <h2 id="mixTitle">Kanalen</h2>
+        <button id="chAdd">Kanaal +</button>
+        <button id="masterBtn">Master</button>
+      </div>
+      <div id="mixer" class="scroll"></div>
+    </div>
+
+    <div id="tabs" class="panel">
+      <div class="ph tabbar" role="tablist">
+        <button data-tab="bank" role="tab">Beeldbank</button>
+        <button data-tab="lib" role="tab">Bibliotheek</button>
+        <button data-tab="auto" role="tab">Automatisch</button>
+      </div>
+      <div id="tab-bank" class="tabview scroll">
+        <div class="sec">
+          <textarea id="bankText" placeholder="Plak hier al je links: YouTube, Instagram, TikTok, afbeeldingen… Genereren kiest hieruit." aria-label="Links voor de beeldbank"></textarea>
+          <div class="rowf">
+            <button id="bankAdd">Toevoegen</button>
+            <button id="bankFiles">Bestanden</button>
+            <span class="note" id="bankInfo"></span>
+          </div>
+          <div class="clips" id="bankGrid"></div>
+        </div>
+      </div>
+      <div id="tab-lib" class="tabview scroll" hidden><div id="scenes"></div></div>
+      <div id="tab-auto" class="tabview scroll" hidden>
+        <div class="sec rowf">
+          <span class="note" style="margin-right:auto">Regels vullen het deck dat niet in beeld is en faden daarheen.</span>
+          <label class="field" title="Minimale tijd voordat een regel weer mag wisselen">Min. <input type="number" id="cooldown" min="0" max="300" step="1"> s</label>
+          <button id="ruleAdd">Regel +</button>
+        </div>
+        <div id="rules"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="colC" class="panel">
+    <div id="inspector" class="scroll"></div>
+  </section>
+
+  <footer id="deck"></footer>
+</main>
+<div id="armBanner" hidden></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<input type="file" id="fileIn" accept="video/*,image/*" multiple hidden>
+<input type="file" id="bankFileIn" accept="video/*,image/*" multiple hidden>
+<input type="file" id="audioFile" accept="audio/*" hidden>
+
+<script src="js/effects.js"></script>
+<script src="js/model.js"></script>
+<script src="js/media.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
